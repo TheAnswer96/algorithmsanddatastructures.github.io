@@ -30,6 +30,29 @@
                 These two concepts are intertwined and form the backbone of software engineering. Data structures provide a way to store and organize data, enabling efficient access, modification, and retrieval, while algorithms define the steps and procedures to perform various operations on the stored data.
             </p>
 
+            <p class="lead">
+                Donald Knuth defines an algorithm as a set of steps, or rules, with five basic properties:
+                <ul>
+                    <li class="lead">
+                        <strong>Finiteness</strong> - An algorithm must start and stop. The rules an algorithm applies must also conclude in a reasonable amount of time. What “reasonable” is depends on the nature of the algorithm, but in no case can an algorithm take an infinite amount of time to complete its task.
+                        Knuth calls this property the finiteness of an algorithm.
+                    </li>
+                    <li class="lead">
+                        <strong>Definiteness</strong>  - The actions that an algorithm performs cannot be open to multiple interpretations; each step must be precise and unambiguous. Knuth terms this quality definiteness. An algorithm cannot iterate a “bunch” of times. The number of times must be precisely expressed, for example 2, 1000000, or a randomly chosen number.
+                    </li>
+                    <li class="lead">
+                        <strong>Inputs</strong>- An algorithm starts its computation from an initial state. This state may be expressed as input values given to the algorithm before it starts.
+                    </li>
+                    <li class="lead">
+                        <strong>Outputs</strong>- An algorithm must produces a result with a specific relation to the inputs.
+                    </li>
+                    <li class="lead">
+                        <strong>Effectiveness</strong>  - The steps an algorithm takes must be sufficiently simple that they could be expressed “on paper”; these steps must make sense for the quantities used. Knuth terms this property effectiveness.
+                        So for the example above of getting to work in the morning, the algorithm is considered finite because it will eventually end when I reach work. It is definite because each step can be followed exactly. The inputs include: my kids, the bus, myself, etc… The output is that I arrive at work. And the algorithm is considered effective because the steps can be listed for you to read and understand.
+                    </li>
+                </ul>
+            </p>
+
             <h3>Enhances Problem-Solving Skills</h3>
 
             <p class="lead">
@@ -275,6 +298,41 @@
                 <canvas id="plotCanvas" width="400" height="400"></canvas><br>
                 <button id="plotButton" class="btn btn-primary">Measure Running Time</button>
             </div>
+
+            <p class="lead">
+                However, there are challenges that cannot be neglected:
+                <ul>
+                    <li class="lead">
+                        Experimental running times of two algorithms are difficult to directly compare unless the experiments are performed in the same hardware and software environments.
+                    </li>
+                    <li class="lead">
+                        Experiments can be done only on a limited set of test inputs; hence, they leave out the running times of inputs not included in the experiment (and these inputs may be important).
+                    </li>
+                    <li class="lead">
+                        An algorithm must be fully implemented in order to execute it to study its running time experimentally.
+                    </li>
+                </ul>
+            </p>
+
+            <h3 class="h3 mb-3">Theoretical Analysis</h3>
+            <p class="lead">
+                To evaluate and compare different algorithms, instead of looking at the actual runtime for an algorithm, it makes more sense to use something called <strong>time complexity</strong>.
+                Time complexity is more abstract than actual runtime, and does not consider factors such as programming language or hardware.
+                Time complexity is the number of operations needed to run an algorithm on large amounts of data. And the number of operations can be considered as time because the computer uses some time for each operation.
+                For example, in the algorithm that finds the maximum sum subarray, each value in the array must be seen one time.
+                Every such comparison can be considered an operation, and each operation takes a certain amount of time.
+                So the total time the algorithm needs to find the maximum sum subarray depends on the number of values in the array.
+                The time it takes to find the maximum sum subarray is therefore linear with the number of values.
+                Roughly speaking, 100 values results in 100 comparisons, and 5000 values results in 5000 comparisons.
+            </p>
+
+            <p class="lead">
+                In other words, we want to use a high-level description of the algorithm instead of an implentation, characterizing the running time as a function of the input size.
+                In this way, we take into account all possible inputs, evaluating the speed of an algorithm independent of the hardware/software environment.
+            </p>
+
+            <h3 class="h3 mb-3">"One Operation"</h3>
+            
         </section>
 
 
