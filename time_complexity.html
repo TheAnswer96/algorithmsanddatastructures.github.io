@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithms and Data Structures: A Premise</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- External Google Fonts for futuristic and minimalist fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Lato:wght@300;400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+     <header class="text-center my-5">
+        <h1 class="display-4">Algorithms and Data Structures: A Premise</h1>
+    </header>
+
+    <main class="container">
+        <!-- Introduction Section -->
+        <section id="introduction" class="mb-5">
+                <h2 class="h2 mb-3">Introduction</h2>
+            <p class="lead">
+                Data structures and algorithms are fundamental components of computer science and software development, playing a crucial role in solving complex problems efficiently.
+                By understanding the importance of data structures and algorithms, programmers and developers can enhance their problem-solving abilities, optimize resource utilization, and create more efficient and scalable software.
+            </p>
+
+            <p class="lead">
+                Data structures refer to the organization and storage of data in a computer’s memory, while algorithms are a set of instructions or rules that manipulate and process that data.
+                These two concepts are intertwined and form the backbone of software engineering. Data structures provide a way to store and organize data, enabling efficient access, modification, and retrieval, while algorithms define the steps and procedures to perform various operations on the stored data.
+            </p>
+
+            <h3>Enhances Problem-Solving Skills</h3>
+
+            <p class="lead">
+                Data structures and algorithms provide a systematic approach to problem-solving.
+                They enable programmers to break down complex problems into smaller, more manageable components, allowing for step-by-step analysis and efficient implementation.
+                By understanding different data structures and algorithms, developers can choose the most appropriate approach to solve a particular problem, leading to optimized solutions.
+            </p>
+
+            <h3>Optimizes Resource Utilization</h3>
+
+            <p class="lead">
+                Efficient resource utilization is essential in software development.
+                Data structures and algorithms help manage memory and computational resources effectively.
+                Well-designed data structures ensure that data is stored and accessed in the most optimized way, reducing memory usage and improving overall performance.
+                Additionally, algorithms provide techniques to process and manipulate data with minimal computational overhead.
+            </p>
+
+            <h3>Improves Code Efficiency</h3>
+
+            <p class="lead">
+                Data structures and algorithms impact the efficiency of code.
+                By choosing the appropriate data structure for a specific problem, developers can reduce the time and computational resources required for operations such as searching, sorting, and inserting data.
+                Similarly, well-optimized algorithms can significantly improve code efficiency, resulting in faster and more responsive software.
+            </p>
+
+            <h3>Facilitates Scalability and Flexibility</h3>
+
+            <p class="lead">
+                As software systems grow in complexity, the ability to scale and adapt becomes crucial.
+                Data structures and algorithms play a vital role in enabling scalability and flexibility in software development.
+                By using scalable data structures, developers can accommodate larger datasets and handle increased user loads without sacrificing performance.
+            </p>
+
+             <figure class="text-center">
+                <img src="images/l1_funny.jpg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Time Complexity Relevance: A Funny Picture.</figcaption>
+            </figure>
+
+            <h2>Real-World Applications of Data Structures and Algorithms</h2>
+
+            <p class="lead">
+                Algorithms and data structures are everywhere in our nowdays lifes.
+                You can find them even inside everyday activities.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/l1_funny2.jpg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Algorithms and Data Structures Everywhere.</figcaption>
+            </figure>
+
+            <p class="lead">
+                The impact of data structures and algorithms can be seen in various real-world applications.
+                Some notable examples include:
+            </p>
+
+            <h3>Search Engines</h3>
+
+            <p class="lead">
+                Search engines like Google rely heavily on data structures and algorithms to efficiently index and retrieve vast amounts of information.
+                Algorithms like PageRank determine the relevance and ranking of web pages, while data structures such as inverted indexes enable quick keyword-based searches.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/l1_example1.png" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Searching Engine Optimization.</figcaption>
+            </figure>
+
+            <h3>Social Networks</h3>
+
+            <p class="lead">
+                Social networking platforms like Facebook and Twitter handle massive amounts of user-generated content.
+                Data structures like graphs facilitate efficient friend connections and recommendations, while algorithms for news feed generation prioritize relevant and engaging content for users.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/l1_example2.png" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Social Network Advertisement Suggestions.</figcaption>
+            </figure>
+
+            <h3>Navigation Systems</h3>
+
+            <p class="lead">
+                Google Maps navigation systems employ data structures and algorithms to calculate the fastest or shortest routes between destinations.
+                Graph-based algorithms, such as Dijkstra’s algorithm, are used to find optimal paths, while spatial data structures help store and retrieve location-based information.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/l1_example3.jpg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Google Maps Fastest Route Computation.</figcaption>
+            </figure>
+        </section>
+
+        <!-- Start with an example Section -->
+        <section id="max-subarray" class="mb-5">
+            <h2 class="h2 mb-3">Break the Ice with an Example</h2>
+            <p class="lead">
+                The <strong>Maximum Subarray Sum</strong> problem is a classic algorithm problem where, given an array of integers,
+                we are tasked with finding the contiguous subarray (containing at least one number) which has the largest sum.
+                This problem often appears in coding interviews and algorithm courses due to its elegant solution using
+                dynamic programming.
+            </p>
+
+            <p class="lead">
+                Imagine we are given an array of numbers. Our goal is to find the subarray with the maximum possible sum.
+                The key challenge is that the array can contain negative numbers, making it harder to just select
+                the largest values. Let's look at some examples to visualize this better.
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-center">Array: <code>[-2, 1, -3, 4, -1, 2, 1, -5, 4]</code></p>
+                    <p class="text-center">Maximum Subarray: <strong>[4, -1, 2, 1]</strong></p>
+                    <p class="text-center">Maximum Sum: <strong>6</strong></p>
+                </div>
+            </div>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-center">Array: <code>[1, -2, 3, 5, -3, 7, -2]</code></p>
+                    <p class="text-center">Maximum Subarray: <strong>[3, 5, -3, 7]</strong></p>
+                    <p class="text-center">Maximum Sum: <strong>12</strong></p>
+                </div>
+            </div>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-center">Array: <code>[-5, -1, -8, -9]</code></p>
+                    <p class="text-center">Maximum Subarray: <strong>[-1]</strong></p>
+                    <p class="text-center">Maximum Sum: <strong>-1</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="brute-force" class="mb-5">
+            <h3 class="h3 mb-3">Brute Force Solution</h3>
+            <p class="lead">
+                The brute force solution for the Maximum Subarray Sum problem involves systematically checking all possible subarrays
+                and calculating their sums to find the maximum sum. Though simple, it is inefficient with a time complexity of O(n²).
+            </p>
+
+            <!-- Input vector visualization -->
+            <div class="example-container mb-4 text-center">
+                <p>Input Vector:</p>
+                <div id="input-vector" class="vector-display"></div>
+            </div>
+
+            <!-- Maximum sum and indices information -->
+            <div class="example-container mb-4 text-center">
+                <p>From Index: <strong><span id="max-start"></span></strong> to Index: <strong><span id="max-end"></span></strong></p>
+                <p>Maximum Sum: <strong><span id="output-max-sum"></span></strong></p>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls mb-3 text-center">
+                <label for="delay">Delay (ms): </label>
+                <input type="number" id="delay" min="100" value="500" class="form-control-inline">
+                <button id="start" class="btn btn-primary">Start Execution</button>
+                <button id="restart" class="btn btn-secondary">Regenerate Vector</button>
+            </div>
+        </section>
+
+        <section id="divide-and-conquer" class="mb-5">
+            <h3 class="h3 mb-3">Divide and Conquer Solution</h3>
+            <p class="lead">
+                The Divide and Conquer approach splits the array into two halves, recursively finds the maximum subarray in both halves,
+                and checks the middle subarray crossing the two halves. This method reduces the time complexity to O(n log n).
+            </p>
+
+            <!-- Input vector visualization -->
+            <div class="example-container mb-4 text-center">
+                <p>Input Vector:</p>
+                <div id="input-vector-dnc" class="vector-display"></div>
+            </div>
+
+            <!-- Maximum sum and indices information -->
+            <div class="example-container mb-4 text-center">
+                <p>From Index: <strong><span id="max-start-dnc"></span></strong> to Index: <strong><span id="max-end-dnc"></span></strong></p>
+                <p>Maximum Sum: <strong><span id="output-max-sum-dnc"></span></strong></p>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls mb-3 text-center">
+                <label for="delay-dnc">Delay (ms): </label>
+                <input type="number" id="delay-dnc" min="100" value="500" class="form-control-inline">
+                <button id="start-dnc" class="btn btn-primary">Start Execution</button>
+                <button id="restart-dnc" class="btn btn-secondary">Regenerate Vector</button>
+            </div>
+        </section>
+
+        <section id="dynamic-programming" class="mb-5">
+            <h3 class="h3 mb-3">Dynamic Programming Solution</h3>
+            <p class="lead">
+                The Dynamic Programming approach for the Maximum Subarray problem builds a solution incrementally.
+                By maintaining a running sum and comparing it with the current element, we can determine the maximum subarray ending at each position.
+                This approach reduces the time complexity to O(n).
+            </p>
+
+            <!-- Input vector visualization -->
+            <div class="example-container mb-4 text-center">
+                <p>Input Vector:</p>
+                <div id="input-vector-dp" class="vector-display"></div>
+            </div>
+
+            <!-- Maximum sum and indices information -->
+            <div class="example-container mb-4 text-center">
+                <p>From Index: <strong><span id="max-start-dp"></span></strong> to Index: <strong><span id="max-end-dp"></span></strong></p>
+                <p>Maximum Sum: <strong><span id="output-max-sum-dp"></span></strong></p>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls mb-3 text-center">
+                <label for="delay-dp">Delay (ms): </label>
+                <input type="number" id="delay-dp" min="100" value="500" class="form-control-inline">
+                <button id="start-dp" class="btn btn-primary">Start Execution</button>
+                <button id="restart-dp" class="btn btn-secondary">Regenerate Vector</button>
+            </div>
+        </section>
+
+        <section id="introduction" class="mb-5">
+                <h2 class="h2 mb-3">Running Time</h2>
+            <p class="lead">
+                Most algorithms transform input objects into output objects.​
+                The running time of an algorithm typically grows with the input size.​
+                Since average case time is often difficult to determine, we focus primarily on the worst case running time because is easier to analyze​ but mostly because it is crucial to applications such as games, finance and robotics​.
+            </p>
+
+            <p class="lead">
+                In order to dig into the beauty and challenges that pertain with its ideation and design, we need to start from the concept of <strong>execution time</strong>.
+                In this case, the straigthforward idea is to run our program with inputs of varying size and composition, noting the running time required.
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>long</b> startTime = System.currentTimeMillis(); </code></p>
+                    <p class="text-left"><strong><i>   your long algorithm...</i></strong></p>
+                    <p class="text-left"><b>long</b> endTime = System.currentTimeMillis();</p>
+                    <p class="text-left"><b>long</b> elapsedTime = endTime - startTime;</p>
+                </div>
+            </div>
+
+            <div class="container text-center">
+                <h2>Algorithm Maximum subarray</h2>
+                <canvas id="plotCanvas" width="400" height="400"></canvas><br>
+                <button id="plotButton" class="btn btn-primary">Measure Running Time</button>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="text-center mt-5 py-4 bg-light">
+        <p class="text-muted">&copy; 2024 Didattica degli Algoritmi.   </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="js/script.js"></script>
+   <script src="js/plot.js"></script>
+</body>
+</html>

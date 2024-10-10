@@ -1,0 +1,145 @@
+/* Google Fonts are already included in the HTML */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif; /* Futuristic font for titles */
+    font-weight: 900; /* Increased weight for emphasis */
+    font-size: 4rem; /* Larger size to make the title more prominent */
+    color: #111; /* Deep black for better contrast */
+    letter-spacing: 3px; /* Increased letter spacing */
+    text-transform: uppercase; /* Uppercase for a more powerful look */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0; /* Light gray underline for section titles */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+figure img {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow for images */
+}
+
+footer {
+    background-color: #f0f0f0;
+    padding: 20px 0;
+}
+
+/* Style for the example container */
+.example-container {
+    background-color: #f8f9fa; /* Light gray background */
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Soft shadow */
+    transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+/* Add hover effect to the examples */
+.example-container:hover {
+    transform: scale(1.03); /* Slightly increase size on hover */
+}
+
+/* Style for array and result visualization */
+.example p {
+    font-size: 1.1rem;
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+code {
+    background-color: #eef1f5; /* Light background for inline code */
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for arrays */
+    font-size: 1.05rem;
+    color: #333;
+}
+
+strong {
+    color: #007bff; /* Highlight key numbers (subarray and max sum) in blue */
+}
+
+/* Style the input and current subarray */
+/* Style for vector cells container */
+.vector-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Style for individual cells in the vector */
+.vector-cell {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+/* Highlight the current subarray in blue */
+.vector-cell.highlight {
+    background-color: #007bff;
+    color: black;
+}
+
+/* Styling for controls */
+.controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#delay {
+    width: 100px;
+    text-align: center;
+}
+
+/* Highlight comparisons during execution in orange */
+.vector-cell.highlight-comparison {
+    background-color: #fd7e14; /* orange */
+    color: black;
+}
+
+/* Highlight the current split subarray in purple */
+.vector-cell.highlight-split {
+    background-color: #4cc9f0; /* purple */
+    color: black;
+}
+
+/* Highlight the best subarray found by DNC in green */
+.vector-cell.highlight-best {
+    background-color: #28a745; /* green */
+    color: black;
+}
