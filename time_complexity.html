@@ -276,7 +276,7 @@
             <p class="lead">
                 Most algorithms transform input objects into output objects.​
                 The running time of an algorithm typically grows with the input size.​
-                Since average case time is often difficult to determine, we focus primarily on the worst case running time because is easier to analyze​ but mostly because it is crucial to applications such as games, finance and robotics​.
+                <!-- Since average case time is often difficult to determine, we focus primarily on the worst case running time because is easier to analyze​ but mostly because it is crucial to applications such as games, finance and robotics​. -->
             </p>
 
             <p class="lead">
@@ -332,9 +332,276 @@
             </p>
 
             <h3 class="h3 mb-3">"One Operation"</h3>
-            
+            <p class="lead">
+                Two common tools used for algorithm analysis are the RAM model of computation and the asymptotic analysis of worst-case complexity.
+                The <strong>RAM</strong> (Random Access Machine) model is used for analyzing algorithms without running them on a physical machine.
+                <br>
+                The RAM model has the following properties:
+                <ul>
+                    <li class="lead">
+                        A simple operation (+, \, *, -, =, if) takes one time step.
+                    </li>
+                    <li class="lead">
+                        Loops and subroutines are comprised of simple operations.
+                    </li>
+                    <li class="lead">
+                        Memory is unlimited and access takes one time step (the RAM model does not consider whether data is on cache or disk).
+                    </li>
+                </ul>
+                Using the RAM model, you measure the running time of an algorithm by counting the number of steps an algorithm takes on a given input.
+                Despite the simplifying assumptions made by the RAM model, it works well in practice.
+            </p>
+
+            <h3 class="h3 mb-3">Best, worst, and average-case complexity</h3>
+            <p class="lead">
+                Often, an algorithm’s input determines the number of steps the algorithm takes to run.
+                For a given input <strong>n</strong>:
+            </p>
+
+            <ul>
+                <li class="lead">The <strong>best-case complexity</strong> is the minimum number of steps taken to complete.</li>
+                <li class="lead">The <strong>worst-case complexity</strong> is the maximum number of steps taken to complete.</li>
+                <li class="lead">The <strong>average-case complexity</strong> is the average number of steps taken to complete.</li>
+            </ul>
+
+            <p class="lead">
+                Each of these complexities defines a numerical function that represents time vs problem size.
+                For example, for an input of size n , an algorithm takes 2n steps to complete in the worst case.
+                The worst-case function for time complexity here is T(n)=2n.
+                <figure class="text-center">
+                    <img src="images/tc.svg" class="img-fluid w-25 rounded shadow-sm">
+                    <figcaption class="text-muted mt-3">A graph of T(n)=2n.</figcaption>
+                </figure>
+            </p>
+
+            <p class="lead">
+                <strong>Worst-case complexity</strong> is normally the most useful measure.
+                This is because the best-case is often so unlikely that it isn’t beneficial to think about.
+                The average-case can be useful, but it is usually difficult to determine. The worst-case is both likely to happen, and easy to calculate.
+            </p>
+
+            <h3 class="h3 mb-3">Big O notation</h3>
+            <p class="lead">
+                Big O is a mathematical notation that describes the limiting behavior of a function as its input tends towards infinity.
+                Big O is useful in algorithm analysis because the functions that we get from counting steps often require a lot of detail to specify.
+                For example, a worst-case analysis might produce a function like this:
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-center"><code>T(n)=1234n²+1228n+92log₂n+8736</code></p>
+                </div>
+            </div>
+
+            <p class="lead">
+                In reality, this level of detail is not much more informative than stating that “the time grows quadratically with n”.
+                It is easier to instead compare the upper and lower bounds of time-complexity functions with asymptotic notation.
+                This includes <strong>big O</strong>, <strong>big omega</strong>, and <strong>big theta</strong>.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/bounds.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Upper and lower bounds for n > n0.</figcaption>
+            </figure>
+
+            <p class="lead">
+                <strong>Big O</strong> describes the upper bound on a function  f.
+                f(n)=O(g(n))  means  c⋅g(n) is an upper bound on  f(n).
+                There exists some constant c such that f(n) is always ≤c⋅g(n) for large enough n (i.e., n≥n0 for some constant n0).
+
+                Big O notation ignores multiplicative constants.
+                In big O analysis, <b>f(n)=n and g(n)=2n</b> are identical.
+            </p>
+
+            <p class="lead">
+                <strong>Big omega</strong> describes the lower bound on a function.
+                f(n)=Ω(g(n)) means  c⋅g(n) is a lower bound on f(n).
+                There exists some constant  c such that  f(n) is always ≥c⋅g(n), for all  n≥n0
+            </p>
+
+            <p class="lead">
+                <strong>Big theta</strong> defines a tight bound where a function f is bound both above and below.
+                f(n)=Θ(g(n))  means  c1⋅g(n) is an upper bound on  f(n) and c2⋅g(n) is a lower bound on f(n), for all  n≥n0.
+                There exist constants  c1 and  c2  such that f(n)≤ c1⋅g(n) and  f(n)≥ c2⋅g(n).
+                This means that g(n) provides a tight bound on f(n)
+            </p>
+
+            <h3 class="h3 mb-3">Growth rates and dominance relations</h3>
+            <p class="lead">
+                Big O notation creates classes of functions, where all functions in a class are equivalent in big O analysis.
+                There are a few classes that must be taken in mind:
+            </p>
+
+            <div class="container mt-5">
+                <!-- Time Complexity Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover complexity-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Notation</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>O(1)</td>
+                                <td>Constant</td>
+                                <td>No matter the size of the input, the algorithm will take the same amount of time to complete.</td>
+                            </tr>
+                            <tr>
+                                <td>O(log n)</td>
+                                <td>Logarithmic</td>
+                                <td>
+                                    The time grows linearly with the input size, such as iterating through an array.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>O(n)</td>
+                                <td>Linear</td>
+                                <td>
+                                    Linear algorithms grow linearly with n. For example an algorithm to calculate the exponent of a number by multiplying a value n times in a loop.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>O(n log n)</td>
+                                <td>Superlinear</td>
+                                <td>
+                                    Superlinear algorithms grow just a little faster than linear algorithms. Common sorting algorithms like Mergesort and Quicksort run in superlinear time.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>O(n²)</td>
+                                <td>Quadratic</td>
+                                <td>
+                                    Quadratic algorithms run slowly. An example is an algorithm that checks for duplicates in an array by looping over each element, and then looping over every other element to check for matches.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>O(2<sup>n</sup>)</td>
+                                <td>Exponential</td>
+                                <td>
+                                    Exponential algorithms are very slow. An example is a recursive algorithm to find the nth term of the fibonacci sequence.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>O(n!)</td>
+                                <td>Factorial</td>
+                                <td>
+                                    Factorial algorithms quickly become useless. They occur when generating all permutations of n.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+            <figure class="text-center">
+                <img src="images/complex.png" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Fundamental function's curves.</figcaption>
+            </figure>
         </section>
 
+        <section id="exercises" class="mb-5">
+            <h2 class="h2 mb-3">It's Evaluation Time!</h2>
+
+            <p class="lead">
+                The theoretical program of this section spans over the concept of algorithm and its time complexity.
+                We introduced time complexity asymptotic notation and we simultaneously defined how to measure time complexity from pseudo code.
+                Evaluating the knowledge developed on those topics requires to understand in depth the main pitfalls.
+            </p>
+
+            <ul class="lead">
+                <li>
+                    It is pretty common that students struggle in front of functions and mathematical concepts.
+                </li>
+                <li>
+                    Another pretty common challenge is to understand loops and incrementally more complex code time Complexities.
+                </li>
+            </ul>
+
+            <p class="lead">
+                PS: not all the students fall on the same errors.
+                Therefore, follow my guidelines but follow mostly your class.
+            </p>
+
+            <h3 class="h3 mb-3">Example 1</h3>
+            <!-- asymptotic proof -->
+            <p class="lead">
+                One of the most common exercise is the following, given a statement, like <b>2<sup>3n+3</sup>∈ O(2<sup>n</sup>)</b>, prove or disprove it.
+            </p>
+
+            <p class="lead">
+                In order to solve this type of exercise, it is necessary to apply the definition of asymptotic time complexity, and solve the inequalities in order to find the values of c1 and n0 such that the definition holds (or verify that there is no value for which the definition holds).
+            </p>
+            <p class="lead">
+                2<sup>3n+3</sup>∈ O(2<sup>n</sup>)
+            </p>
+            <p class="lead">
+                2<sup>3n+3</sup> ≤ c<sub>1</sub> 2<sup>n</sup>
+            </p>
+            <p class="lead">
+                2<sup>n</sup>·2<sup>n</sup>·2<sup>n+3</sup> ≤ c<sub>1</sub> 2<sup>n</sup>
+            </p>
+            <p class="lead">
+                2<sup>n</sup>·2<sup>n+3</sup>≤ c<sub>1</sub>
+            </p>
+            <p class="lead">
+                <strong>There is not any costant c<sub>1</sub> greater than a monotonic ascending function.</strong>
+            </p>
+
+            <h3 class="h3 mb-3">Example 2</h3>
+            <!-- order functions -->
+            <p class="lead">
+                Sort the following functions from the slowest up to the fastest.
+            </p>
+            <ul class="lead">
+                <li>2 <sup>log<sub>2</sub><span>&#8730;</span>n</sup> </li>
+                <li>2 <sup>n/2</sup></li>
+                <li>8 <sup>log<sub>4</sub>n</sup></li>
+            </ul>
+            <p class="lead">Let's monging a little bit the three functions:</p>
+            <ul class="lead">
+                <li>2 <sup>log<sub>2</sub><span>&#8730;</span>n</sup> = 2 <sup>1/2 log<sub>2</sub>n</sup> = n <sup>1/2 log<sub>2</sub>2 </sup> = <span>&#8730;</span>n </li>
+                <li>2 <sup>n/2</sup></li>
+                <li>8 <sup>log<sub>4</sub>n</sup> = 2 <sup>3log<sub>4</sub>n</sup>=n<sup>3/2</sup></li>
+            </ul>
+            <p class="lead">
+                Therefore the order is 2 <sup>n/2</sup> then n<sup>3/2</sup> and finally  <span>&#8730;</span>n
+            </p>
+            <h3 class="h3 mb-3">Example 3</h3>
+            <!-- snippets complexity -->
+            <p class="lead">
+                Study the time complexity of the following snippet of code finding an upper bound for its running time.
+            </p>
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><code>def Pippo(){</code></p>
+                    <p class="text-left"><code>    k=7;{</code></p>
+                    <p class="text-left"><code>    while k < n {</code></p>
+                    <p class="text-left"><code>        k = k * 7;}</code></p>
+                    <p class="text-left"><code>return}</code></p>
+                </div>
+            </div>
+
+            <p class="lead">
+                In this case, the execercise requires us to count with respect to the input size n, the asymptotic bound that limits above the
+                snippet of code complexity.
+                We observe that the while loop ends once k is greater or equal to n.
+                So a good practice is track the evolution of k step by step.
+                We notice that at the first iteration k=7, at second k=7*7, third k=7*7*7, so at the i-th k=7<sup>i</sup>.
+            </p>
+            <p class="lead">
+                From above we can count how many steps by solving the inequality:
+            </p>
+            <p class="lead">
+                7<sup>i</sup> >= n = i log 7 >= log n
+            </p>
+            <p class="lead">
+                <strong>The time complexity of Pippo() is O(log n)</strong>.
+            </p>
+        </section>
 
     </main>
 

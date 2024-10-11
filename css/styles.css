@@ -143,3 +143,52 @@ strong {
     background-color: #28a745; /* green */
     color: black;
 }
+
+/* General page styles */
+body {
+    background-color: #f4f4f4;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+
+/* Table styles */
+.complexity-table {
+    background-color: white;
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.complexity-table th, .complexity-table td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ccc;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.complexity-table th {
+    background-color: #333;
+    color: white;
+    font-family: 'Lato', sans-serif;
+}
+
+.complexity-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.complexity-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .complexity-table th, .complexity-table td {
+        font-size: 1rem;
+        padding: 10px;
+    }
+}
