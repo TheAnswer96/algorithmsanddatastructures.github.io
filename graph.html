@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithms and Data Structures: A Premise</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- External Google Fonts for futuristic and minimalist fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Lato:wght@300;400&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+     <header class="text-center my-5">
+        <h1 class="display-4">Algorithms and Data Structures: Graphs</h1>
+    </header>
+
+    <main class="container">
+        <!-- Introduction Section -->
+        <section id="introduction" class="mb-5">
+            <h2 class="h2 mb-3">Introduction</h2>
+            <p class="lead">
+                A graph G=(V, E) consists of a set of vertices V and a set of edges E.
+                A <strong>vertex</strong> is a node in a graph. An <strong>edge</strong> represents a link between two vertices.
+            </p>
+            <figure class="text-center">
+                <img src="images/graph.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">A graph.</figcaption>
+            </figure>
+
+            <p class="lead">
+                The <strong>degree</strong> of a vertex is the number of edges that are incident to the vertex.
+                An edge (u,v) is <strong>incident</strong> to vertices u and v.
+            </p>
+
+            <p class="lead">Typical graph operations are:</p>
+
+            <div class="container mt-5">
+                <!-- Time Complexity Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover complexity-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Operation</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> <code>add_edge(x,y)</code> </td>
+                                <td>Add the edge(x,y) to  E.</td>
+                            </tr>
+                            <tr>
+                                <td><code>add_vertex(x)</code></td>
+                                <td>
+                                    Add vertex x to V.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>remove_edge(x,y)</code></td>
+                                <td>
+                                    Remove the edge(x,y) to E.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>has_edge(x,y)</code></td>
+                                <td>
+                                    Check if the edge(x,y) belongs to E.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>out_edge(x)</code></td>
+                                <td>
+                                    Return a List of all the x outbound edges.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>in_edge(x)</code></td>
+                                <td>
+                                    Return a List of all the x inbound edges.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>remove_edge(x,y)</code></td>
+                                <td>
+                                    Remove the edge(x,y) to E.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+
+            <h3 class="h3 mb-3">Graph properties</h3>
+            <p class="lead">
+                Graph properties affect the data structure used to represent the graph and the algorithms available to interact with them.
+            </p>
+
+            <p class="lead">
+                <strong>Undirected vs directed: </strong> A graph G=(V,E) is undirected if an edge(x,y) in set E means that  (x,y) is also in set  E.
+                If this is not the case, then the graph is a directed graph
+            </p>
+
+            <figure class="text-center">
+                <img src="images/dgraph.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">An undirected graph and a directed graph.</figcaption>
+            </figure>
+
+            <p class="lead">
+                Directed graphs are common when representing dependencies, which have a parent-child relationship.
+            </p>
+
+            <p class="lead">
+                <strong>Weighted vs unweighted: </strong> In a weighted graph each edge is assigned a value (a weight). For example, the edge in a road network might be assigned a cost for drive time.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/weighted.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">A weighted graph.</figcaption>
+            </figure>
+
+            <p class="lead">In an unweighted graph there is no value associated with an edge.</p>
+
+            <p class="lead">
+                <strong>Simple vs non-simple:</strong> A simple graph is a graph without self-loops or multiple edges.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/non-simple.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">A non-simple graph with a self-loop and multiple edges.</figcaption>
+            </figure>
+
+            <p class="lead"> A non-simple graph can contain these types of edges.</p>
+
+            <p class="lead">
+                <strong>Sparse vs dense: </strong>A graph is sparse if only a small number of the possible vertex pairs have edges defined between them.
+                A dense graph is a graph where lots of the possible vertex pairs have edges defined between them.
+                Dense graphs typically have a quadratic number of edges.
+            </p>
+
+            <p class="lead">
+                <strong>Cyclic vs acyclic: </strong> Cyclic graphs contain cycles, Acyclic graphs do not.
+                Trees are acyclic graphs.
+            </p>
+
+            <p class="lead">
+                <strong>Labelled vs unlabelled:</strong> In a labelled graph, each vertex is assigned a unique name. In an unlabelled graph, vertices do not have an associated name.
+            </p>
+
+            <h2 class="h2 mb-3">Representing a Graph</h2>
+
+            <p class="lead">
+                There are two common ways to represent a graph G=(V,E):
+            </p>
+            <ul class="lead">
+                <li>Adjacency matrix</li>
+                <li>Adjacency list</li>
+            </ul>
+
+            <h3 class="h3 mb-3">Adjacency matrix</h3>
+            <p class="lead">
+                An <strong>adjacency matrix</strong> is a nxn M, where n is the number of vertices.
+            </p>
+            <p class="lead">
+                M[x,y]=1 if (x,y) is an edge of G, and 0 if it is not.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/adjacency-matrix.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">A graph and its adjacency matrix.</figcaption>
+            </figure>
+
+            <p class="lead">
+                Common operations like <code>add_edge()</code>, <code>remove_edge()</code>, and <code>has_edge()</code> are O(1) operations.
+            </p>
+            <div class="container mt-5">
+                <!-- Add Edge Function Example -->
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> add_edge(<b>int</b> x, <b>int</b> y) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;a[x][y] = 1;</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <!-- Remove Edge Function Example -->
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> remove_edge(<b>int</b> x, <b>int</b> y) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;a[x][y] = 0;</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <!-- Has Edge Function Example -->
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>bool</b> has_edge(<b>int</b> x, <b>int</b> y) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> a[x][y] == 1;</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="lead">
+                Methods returning edges for a given node, e.g. <code>out_edges()</code>/<code>in_edges()</code>, are O(n) operations.
+                An entire row/column must be checked to find the edges.
+                Another problem with adjacency matrices is that they quickly grow large. For this reason they are often impractical.
+            </p>
+
+            <h3 class="h3 mb-3">Adjacency list</h3>
+
+            <p class="lead">
+                An <strong>adjacency list</strong> is a data structure that uses an array of lists to store the edges of vertices.
+                Adjacency lists are more efficient at representing sparse graphs than adjacency matrices.
+                An adjacency list can be represented with a <code>graph</code> struct and an <code>edgenode</code> struct.
+                Each vertex is assigned a unique identifier from 1 to <code>nvertices</code>.
+                The edges on a vertex <code>x</code> are included as a linked list of <code>edgenodes</code> starting at the <code>edgenode</code> at <code>nvertices[x]</code>.
+            </p>
+
+            <div class="container mt-5">
+                <!-- MAXV Constant Example -->
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>const int</b> MAXV = 1000;</p>
+                    </div>
+                </div>
+
+                <!-- Edgenode Struct Example -->
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>typedef struct</b> {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> y;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> weight;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>struct edgenode</b> *next;</p>
+                        <p class="text-left">}</p>
+                        <p class="text-left"><b>edgenode</b>;</p>
+                    </div>
+                </div>
+
+                <!-- Graph Struct Example -->
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>typedef struct</b> {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>edgenode</b> *edges[MAXV+1];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> degree[MAXV+1];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> nvertices;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>bool</b> directed;</p>
+                        <p class="text-left">}</p>
+                        <p class="text-left"><b>graph</b>;</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="lead">
+                A directed edge (x,y) is represented as a y <code>edgenode</code> in x's adjacency list (at <code>g->edges[x]</code>).
+                undirected edge appears twice, once in x's list as y, and once in y's list as x.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/adjacency-list.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">A graph and its adjacency list.</figcaption>
+            </figure>
+
+            <p class="lead">
+                The following code initializes an adjacency list with m vertices:
+            </p>
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>void</b> initialize_graph(<b>graph</b> *g, <b>bool</b> directed, <b>int</b> m) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> i;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> x;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> y;</p>
+                    <br>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;g->nvertices = n;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;g->nedges = m;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;g->directed = directed;</p>
+                    <br>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (i = 1; i <= m; i++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g->degree[i] = 0;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <br>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (i = 1; i <= m; i++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g->edges[i] = NULL;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                Edges can be added from a 2D array:
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>int</b> example_edges[4][2] = { {1, 2}, {1, 4}, {1, 3}, {3, 4} };</p>
+                    <br>
+                    <p class="text-left"><b>void</b> add_edges(<b>graph</b> *g, <b>bool</b> directed, <b>int</b> m, <b>int</b> edges[][2]) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> x;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> y;</p>
+                    <br>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> i = 0; i &lt; m; i++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = edges[i][0];</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = edges[i][1];</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_edge(g, x, y, directed);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                    <br>
+                    <p class="text-left"><b>void</b> insert_edge(<b>graph</b> *g, <b>int</b> x, <b>int</b> y, <b>bool</b> directed) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>edgenode</b> *p;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;p = <b>malloc</b>(<b>sizeof</b>(<b>edgenode</b>));</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;p->weight = 0;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;p->y = y;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;p->next = g->edges[x];</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;g->edges[x] = p;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;g->degree[x]++;</p>
+                    <br>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (directed == <b>false</b>) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_edge(g, y, x, <b>true</b>);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;} <b>else</b> {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g->nedges++;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <h2 class="h2 mb-3">Graph Traversal</h2>
+
+            <p class="lead">
+                Traversing a graph to visit every edge and vertex is a common problem.
+                It’s usually necessary to keep track of whether a vertex has been visited or not to avoid visiting vertices multiple times.
+                This can be achieved by using a flag.
+                In this section, a vertex can exist in one of three states during traversal:
+            </p>
+            <ul class="lead">
+                <li><strong>Undiscovered</strong>. The vertex has not been visited.</li>
+                <li><strong>Discovered</strong>. The vertex has been visited but all its incident edges have not yet been visited.</li>
+                <li><strong>Processed</strong>. The vertex and all its incident edges have been visited.</li>
+            </ul>
+
+            <p class="lead">
+                To completely explore a vertex v, each edge leaving v must be explored. Edges that go to a discovered or processed vertex are ignored.
+                An undirected edge will be considered twice, once from each vertex.
+                Directed edges are only considered once.
+                We will look at breadth-first search (BFS) and depth-first-search (DFS) algorithms for traversing a graph.
+            </p>
+
+            <h2 class="h2 mb-3">Breadth-First Search</h2>
+
+            <p class="lead">
+                BFS (Breadth-First Search) is a common tree traversal algorithm.
+                When BFS is run on an undirected graph, a direction is assigned to each edge from the discoverer u to the discovered  v.
+                Thus, u is denoted as the parent of v.
+                Apart from the root node, each node has one parent.
+                This defines a tree of the vertices in a graph:
+            </p>
+
+            <figure class="text-center">
+                <img src="images/bfs-tree.svg" class="img-fluid w-25 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">Undirected graph and BFS tree.</figcaption>
+            </figure>
+        </section>
+
+
+
+    </main>
+
+    <footer class="text-center mt-5 py-4 bg-light">
+        <p class="text-muted">&copy; 2024 Didattica degli Algoritmi.   </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="js/script.js"></script>
+   <script src="js/plot.js"></script>
+</body>
+</html>
