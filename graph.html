@@ -358,9 +358,291 @@
             </p>
 
             <figure class="text-center">
-                <img src="images/bfs-tree.svg" class="img-fluid w-25 rounded shadow-sm">
-                <figcaption class="text-muted mt-3">Undirected graph and BFS tree.</figcaption>
+                <img src="images/bfs_.gif" class="img-fluid w-50 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">BFS logic.</figcaption>
             </figure>
+
+
+            <p class="lead">
+                The following is the algorithm for BFS in pseudocode:
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>BFS(G,s)</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> each vertex u ∈ V [G] − {s} <b>do</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[u] = “undiscovered”</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[u] = nil, i.e. no parent is in the BFS tree</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;state[s] = “discovered”</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;p[s] = nil</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;Q = {s}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>while</b> Q ≠ ∅ <b>do</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;u = dequeue[Q]</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process vertex u as desired</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> each v ∈ Adj[u] <b>do</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process edge (u,v) as desired</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> state[v] = “undiscovered” <b>then</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[v] = “discovered”</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enqueue[Q,v]</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;state[u] = “processed”</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                The following BFS implementation uses two arrays (<code>processed</code> and <code>discovered</code>) to store information about the state of a vertex (initially set to <code>false</code>).
+                As well as a parent array used to store the parent of a vertex:
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>bool</b> processed[MAXV+1];</p>
+                    <p class="text-left"><b>bool</b> discovered[MAXV+1];</p>
+                    <p class="text-left"><b>int</b> parent[MAXV+1];</p>
+                    <p class="text-left"></p>
+                    <p class="text-left"><b>void</b> initialize_search(<b>graph</b> *g) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> i = 1; i <= g-&gt;nvertices; i++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;processed[i] = discovered[i] = <b>FALSE</b>;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent[i] = -1;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                In BFS, a vertex is placed on a queue when it is discovered.
+                This means the oldest vertices (the ones closest to the root) are expanded first.
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>void</b> bfs(<b>graph</b> *g, <b>int</b> start) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>queue</b> q;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> v;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> y;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>edgenode</b> *p;</p>
+                    <p class="text-left"></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;init_queue(&q);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;enqueue(&q, start);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;discovered[start] = <b>TRUE</b>;</p>
+                    <p class="text-left"></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>while</b> (empty_queue(&q) == <b>FALSE</b>) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v = dequeue(&q);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process_vertex_early(v);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;processed[v] = <b>TRUE</b>;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p = g-&gt;edges[v];</p>
+                    <p class="text-left"></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>while</b> (p != <b>NULL</b>) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y = p-&gt;y;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> ((processed[y] == <b>FALSE</b>) || g-&gt;directed) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process_edge(v, y);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left"></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (discovered[y] == <b>FALSE</b>) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enqueue(&q, y);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;discovered[y] = <b>TRUE</b>;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent[y] = v;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p = p-&gt;next;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process_vertex_late(v);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                The behavior of BFS is defined by the functions <code>process_vertex_early()</code>, <code>process_edge()</code>, and <code>process_vertex_late()</code>.
+                The vertex that discovered vertex <code>i</code> is at <code>parent[i]</code>.
+                Because vertices are discovered in order of increasing distance from the root node, the tree path from each node  x ∈ V uses the minimum number of edges on a root-to-x path.
+                The path from a vertex can be reconstructed by following the chain of parents:
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>void</b> find_path(<b>int</b> start, <b>int</b> end, <b>int</b> parents[]) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> ((start == end) || (end == -1)) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-warning">"\n%d"</span>, start);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;} <b>else</b> {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;find_path(start, parents[end], parents);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-warning">" %d"</span>, end);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <ul class="lead">
+                <li>The BFS shortest path tree from x to y is only useful if x is the root of the tree.</li>
+                <li>BFS only gives shortest path if path is unweighted.</li>
+            </ul>
+
+            <p class="lead">
+                BFS runs in O(n+m) time on a graph of n  vertices and m edges.
+            </p>
+
+            <h2 class="h2 mb-3">Depth-First Search</h2>
+
+            <p class="lead">
+                DFS (Depth-first search) is an alternative method for visiting a graph.
+                The difference between DFS and BFS is the order that they visit nodes in. DFS visits all children in a path, before backing up to previous nodes.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/dfs.gif" class="img-fluid w-50 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">DFS logic.</figcaption>
+            </figure>
+
+            <p class="lead">
+                DFS uses a stack to store discovered nodes that need to be processed (instead of a queue like BFS).
+                DFS can also be defined recursively (implicitly using the language call stack), which eliminates the use of an explicit stack:
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>void</b> DFS(<b>graph</b> G, <b>int</b> u) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;state[u] = <span class="text-warning">“discovered”</span>;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;process_vertex(u); <b>// Process vertex u if desired</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;entry[u] = time;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;time = time + 1;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> each v ∈ Adj[u] <b>do</b> {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;process_edge(u, v); <b>// Process edge (u,v) if desired</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> state[v] = <span class="text-warning">“undiscovered”</span> <b>then</b> {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>DFS(G, v);</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;state[u] = <span class="text-warning">“processed”</span>;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;exit[u] = time;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;time = time + 1;</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">Time intervals in DFS are useful for:</p>
+
+            <ul class="lead">
+                <li>Determining an ancestor. An ancestor will have a lower entry time than its descendants.</li>
+                <li>Determining number of descendants. The difference in entry and exit time determines how many descendants a vertex has.</li>
+            </ul>
+
+            <p class="lead">
+                A DFS partitions edges of an undirected graph into tree edges and back edges.
+                <strong>Tree edges</strong> discover new vertices, and are encoded in the parent relation.
+                <strong>Back edges</strong> are edges whose other endpoint is an ancestor of the vertex being expanded.
+            </p>
+
+            <figure class="text-center">
+                <img src="images/back.svg" class="img-fluid w-50 rounded shadow-sm">
+                <figcaption class="text-muted mt-3">DFS tree with tree edges and back edge.</figcaption>
+            </figure>
+
+            <p class="lead">
+                DFS runs in O(n+m) time on a graph of n  vertices and m edges.
+            </p>
+
+            <section id="exercises" class="mb-5">
+                <h2 class="h2 mb-3">It's Evaluation Time!</h2>
+
+                <p class="lead">
+                    The theoretical program of this section spans over the concept of graphs, BFS visit, and DFS visit.
+                    This time is more crucial to understand the logic behind the introduced concepts rather than make memory tests.
+                    It is pretty common that students are able to memoize algorithm's pseudocodes but demostrating a lack of comprehension on their logic.
+                    Hence, a good way to evaluate them is to propose problems where standard well-known algorithm must be extended in order to return the correct solution.
+                    Let's see some examples:
+                </p>
+
+                <h3 class="h3 mb-3">Example 1</h3>
+                <!-- asymptotic proof -->
+                <p class="lead">
+                    Given a graph G=(V, E) write an algorithm for computing how many connected components there are in G.
+                </p>
+
+                <p class="lead">
+                    A connected component of an undirected graph is a set of vertices where there is a path between each pair of vertices.
+                    Components are separate pieces of a graph if there is no connection between the pieces.
+                </p>
+
+
+                <figure class="text-center">
+                    <img src="images/connected-components.svg" class="img-fluid w-50 rounded shadow-sm">
+                    <figcaption class="text-muted mt-3">Connected components.</figcaption>
+                </figure>
+
+                <p class="lead">
+                    All components of a graph can be found by looping through its vertices, starting a new breadth-first or depth-first search whenever the loop reaches a vertex that has not already been included in a previously found component.
+                    Let's see the pseudocode that relies on BFS:
+                </p>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> connected_components(<b>graph</b> *g) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> c; <b>// component number</b></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> i; <b>// counter</b></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;initialize_search(g);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;c = 0;</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (i = 1; i <= g->nvertices; i++) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (discovered[i] == <span class="text-warning">FALSE</span>) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c = c + 1;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-warning">"Component %d:"</span>, c);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bfs(g, i);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf(<span class="text-warning">"\n"</span>);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <p class="lead">
+                    The time complexity of this algorihtm is O(n+m).
+                </p>
+
+                <h3 class="h3 mb-3">Example 2</h3>
+                <!-- order functions -->
+                <p class="lead">
+                    Given a graph G=(V, E) write an algorithm for determing whether or not it exists at least one cycle in G.
+                </p>
+
+                <p class="lead">
+                    If there is a back edge from  (x,y) then a cycle exists between x and y.
+                    If there are no back edges, then there are no cycles.
+                </p>
+
+                <p class="lead">
+                    We can check for cycles with <code>dfs()</code> by a small modification:
+                </p>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> DFS(<b>graph</b> G, <b>int</b> u) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;state[u] = <span class="text-warning">“discovered”</span>;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;entry[u] = time;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;time = time + 1;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> each v ∈ Adj[u] <b>do</b> {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> state[v] = <span class="text-warning">“processed”</span> <b>then</b> {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return “cycle”;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> state[v] = <span class="text-warning">“undiscovered”</span> <b>then</b> {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p[v] = u;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>DFS(G, v);</b></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;state[u] = <span class="text-warning">“processed”</span>;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;exit[u] = time;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;time = time + 1;</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <p class="lead">
+                    The time complexity of this algorihtm is O(n+m).
+                </p>
+
+                <div class="container text-center">
+                    <button class="btn btn-primary lesson-btn" onclick="window.location.href='index.html'">Return to Home</button>
+                </div>
+            </section>
         </section>
 
 
@@ -372,7 +654,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="js/script.js"></script>
-   <script src="js/plot.js"></script>
+   <script src="js/bfs-visualization.js"></script>
 </body>
 </html>
