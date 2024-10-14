@@ -20,7 +20,272 @@
         <!-- Introduction Section -->
         <section id="introduction" class="mb-5">
             <h2 class="h2 mb-3">Introduction</h2>
+            <p class="lead">
+                Algorithms have come to be recognized as the cornerstone of computer science.
+                The progress in this field to date, however, has been very uneven.
+                While the framework for analysis of algorithms has been firmly established and successfully developed for quite some time, much less effort has been devoted to algorithm design techniques.
+                This comparative lack of interest is surprising and unfortunate in view of the two important payoffs in the study of algorithm design techniques: “First, it leads to an organized way to devise algorithms.
+                Algorithm design techniques give guidance and direction on how to create a new algorithm.
+                Though there are literally thousands of algorithms, there are very few design techniques.
+                Second, the study of these techniques help us to categorize or organize the algorithms we know and in that way to understand them better.”
+                Despite the dearth of papers dedicated to the subject, primarily through efforts of textbook writers a consensus seems to have evolved as to which approaches qualify as major techniques for designing algorithms.
+            </p>
 
+            <figure class="text-center">
+               <img src="images/funny_program.jpg" class="img-fluid w-25 rounded shadow-sm">
+               <figcaption class="text-muted mt-3">Algorithm solving techniques are always overlooked.</figcaption>
+           </figure>
+
+            <p class="lead">
+                <strong>Divide-and-conquer</strong> is probably the best known general algorithm design technique.
+                It is based on partitioning a problem into a number of smaller subproblems, usually of the same kind and ideally of about the same size.
+                The subproblems are then solved (usually recursively or, if they are small enough, by a simpler algorithm) and their solutions combined to get a solution to the original problem.
+                Standard examples include mergesort, quicksort, multiplication of large integers, and Strassen’s matrix multiplication.
+                Let's see an example:
+            </p>
+
+            <h3 class="h3 mb-3">Find the Maximum Value in an Array</h3>
+                <p class="lead">
+                    To give an idea on how divide-and-conquer works, we begin with one of the most famous problem:  <strong>find largest element in an array</strong>.
+                    Given an array of size N, the task is to find the largest element in the given array.
+                </p>
+
+                <div class="container text-center">
+                    <p class="lead-1">
+                        <b>Can you see how to retrive the largest value inside an array?</b>
+                    </p>
+                </div>
+
+                <br>
+                <p class="lead">
+                    The simplest approach is to solve this problem is to traverse the whole list and find the maximum among them.
+                    let's the code:
+                </p>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>int</b> largest(<b>int</b> arr[], <b>int</b> n) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> i;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;\\ Initialize maximum element </p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> max = arr[0];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;\\Traverse array elements </p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;\\ from second and compare every element with current max </p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (i = 1; i &lt; n; i++)</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (arr[i] &gt; max)</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max = arr[i];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> max;</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <p class="lead">
+                    <strong>Time complexity:</strong> O(n) since it iterates over all the items just once.
+                </p>
+
+                <div class="container text-center">
+                    <p class="lead-1">
+                        <b>Can you see how to retrive the largest value inside an array with <strong>divide and conquer</strong>?</b>
+                    </p>
+                </div>
+
+                <p class="lead">
+                    <b>Idea:</b> Partition the array into two equal halves and recursively determine the greatest of those portions.
+                    Then, to determine the largest element, compare the maximum of those portions.
+                    pseudocode below.
+                </p>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>int</b> FindMax (<b>int</b> arr[], <b>int</b> i, <b>int</b> f) { </p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (f - i == 1) <b>then</b> </p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> arr[i];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>else</b> {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> q = ⌊(i + f) / 2⌋;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> <b>max</b>(FindMax(arr, i, q), FindMax(arr, q+1, f));</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <div class="container text-center">
+                    <p class="lead-1">
+                        <b>Did we improve time complexity? <strong>No!</strong> </b>
+                    </p>
+                </div>
+
+                <h3 class="h3 mb-3">Recursive Algorithms</h3>
+                <figure class="text-center">
+                   <img src="images/rec_funny.jpg" class="img-fluid w-25 rounded shadow-sm">
+                   <figcaption class="text-muted mt-3">Problem with recursion?.</figcaption>
+               </figure>
+                <div class="container text-center">
+                    <p class="lead-1">
+                        <b>How to evaluate a recursive algorithm time complexity?</b>
+                    </p>
+                </div>
+
+                <p class="lead">
+                    In order to derive a time Complexity for a recursive algorithm we have to introduce the concept of <strong>recurrence relation</strong>.
+                    A recurrence relation is a mathematical equation that defines a sequence of values based on previous terms in the sequence, so in other words it describes the evolution of the algorithm according to input size.
+                    The criticial question is: <strong>How can we write the recurrence relation algorithm? How can we write the recurrence relation of our FindMax?</strong>.
+                </p>
+
+                <p class="lead">
+                    In recursion, we solve a problem by breaking it into smaller subproblems.
+                    If the time complexity function of input size n is T(n), then the time complexity of the smaller subproblems will be defined by the same function, but in terms of the subproblem's input size.
+                    So here is an approach to write T(n) if we have k number of subproblems:
+                </p>
+
+                <div class="container text-center">
+                    <p class="lead">
+                        <b>T(n) = T(I° subproblem input size ) + T(II° subproblem input size) + .... + T(kth subproblem input size) + Time complexity of extra operations other than recursive calls.</b>
+                    </p>
+                </div>
+
+                <p class="lead">
+                    We can use the above formula to define the recurrence relation of every recursive function.
+                    We then solve the recurrence relation and calculate the overall time complexity in terms of Big-O notation.
+                    Let's better understand this by writing FindMax relation.
+                </p>
+
+                <ul class="lead">
+                    <li>
+                        <p class="lead"><b>Base case:</b> when the two indexes, i.e., i and f, are the same.</p>
+                    </li>
+                    <li>
+                        <p class="lead"> <b>Calls: </b> FindMax(arr, i, q) and FindMax(arr, q+1, f)</p>
+                    </li>
+                    <li>
+                        <p class="lead"><b>Extra operations:</b> perform the comparisons, namely compute the max function of two elements</p>
+                    </li>
+                </ul>
+
+                <p class="lead">
+                    We are obtaning the largest value by evaluating the max function of recursively smaller subarray (n/2).
+                    Therefore, the recurrence relation is <strong>T(n) = T(n/2) + T(n/2) + O(1) = 2T(n/2) + O(1)</strong>.
+                </p>
+
+                <p class="lead">
+                    Once the recurrence relation is derived, we can estimate the asymptotic time complexity by relying on three main common methods:
+                    <ul>
+                        <li>
+                            <p class="lead">Method 1: <strong>Recursion Tree Method</strong></p>
+                        </li>
+                        <li>
+                            <p class="lead">Method 2: <strong>Master Theorem</strong></p>
+                        </li>
+                        <li>
+                            <p class="lead">Method 3: <strong>Substitution</strong></p>
+                        </li>
+                    </ul>
+                </p>
+
+                <h3 class="h3 mb-3">Recursion Tree Method</h3>
+
+                <p class="lead">
+                    A recursion tree is a tree diagram of recursive calls where each tree node represents the cost of a certain subproblem.
+                    The idea is simple! The time complexity of a recursive function depends on two factors:
+                    <ol>
+                        <li><p class="lead">The total number of recursive calls</p></li>
+                        <li><p class="lead">The time complexity of additional operations for each recursive call</p></li>
+                    </ol>
+                </p>
+
+                <p class="lead">
+                    So, a recursion tree is a diagram that represents the additional cost for each recursive call in terms of its input size.
+                    We should add the extra cost for each recursive call to get the overall time complexity.
+                    The best idea is to perform this sum level by level.
+                    We can synthetize how this method works as follows:
+                </p>
+
+                <ol>
+                    <li>
+                        <p class="lead">Draw the recursion tree for the given recurrence relation</p>
+                    </li>
+                    <li>
+                        <p class="lead">Calculate the cost of additional operations for each recursive call</p>
+                    </li>
+                    <li>
+                        <p class="lead">Add the cost of each level to determine the total cost of recursive</p>
+                    </li>
+                    <li>
+                        <p class="lead">Simplify the resultant expression to get the overall time complexity in terms of big-O notation.</p>
+                    </li>
+                </ol>
+
+                <p class="lead">
+                    FindMax recurrence relation: <strong>T(n)=2t(n/2) + O(1)</strong>
+                </p>
+
+                <figure class="text-center">
+                   <img src="images/tree.svg" class="img-fluid w-25 rounded shadow-sm">
+                   <figcaption class="text-muted mt-3">Recursion tree for FindMax.</figcaption>
+               </figure>
+
+               <p class="lead">
+                   We can observe that the size of the problem halved at every step.
+                   Therefore, it is possible to write a node in a more generic way, for example at j-th iteration.
+                   For instace, since we halved time our size, at j-th iteration the size would have been T(n) = n/2<sup>j</sup>.
+               </p>
+
+               <p class="lead">
+                   Now, we need to estimate the height of our tree.
+                   To do that we need to reason over the base case condition and when it is met.
+                   In our case, we reach the base case when the difference between i and f is equal to 1.
+                   In other words, we can study the following equation to know when the recursion will end.
+               </p>
+
+               <p class="lead">
+                   n/2<sup>j</sup> = 1 => log n/2<sup>j</sup> = log 1
+               </p>
+
+               <p class="lead">
+                   log n - j log 2 = 0 => <strong>j = log n</strong>
+               </p>
+
+               <p class="lead">
+                   Now, it remains to establish the cost of a generic layer j-th:
+               </p>
+
+               <p class="lead">
+                   In our case, we have at generic layer j-th 2<sup>j</sup> nodes that cost the time required for comparison, i.e., O(1).
+                   So, the sum of 2<sup>j</sup> costant times returns us a costant time per layer.
+               </p>
+
+               <p class="lead">
+                   Given that, we can sum up the cost of every level plus the number of leaves and obtaining:
+               </p>
+
+               <p class="lead">
+                   ∑ <sub>k=1</sub> <sup>log n</sup>  O(1) + 2 <sup>log n</sup> = O(1) + n <sup>log 2</sup> = <strong>O(n)</strong>.
+               </p>
+
+               <h3 class="h3 mb-3">Master Theorem Method</h3>
+
+               <p class="lead">
+                   We use the master method for finding the time complexity of the divide and conquer algorithm that partitions an input into smaller subproblems of equal sizes.
+                   It is a direct way to get the solution for recurrences that can be transformed to the type: T(n) = aT(n/b) + O(n^k), where a≥1 and b&gt;1.
+               </p>
+
+               <p class="lead">
+                   The master theorem recurrence describes the time complexity of an algorithm that divides a problem of size&nbsp; <strong>n</strong>&nbsp;into&nbsp;<strong>a</strong>&nbsp;number of subproblems, each of size&nbsp; <strong>n/b</strong> , where&nbsp; <strong>a</strong> &nbsp;and&nbsp; <strong>b</strong> &nbsp;are positive constants.
+                   Here&nbsp; <strong>a</strong> &nbsp;number of subproblems are solved recursively, each in time T(n/b) and O(n^k) is the cost of dividing the problem and combining the solution of subproblems.
+               </p>
+
+               <p class="lead">
+                   There are three cases of recursion analysis using the master theorem:
+               </p>
+
+               <ol>
+                   <li> <p class="lead"> <strong>Case 1:</strong>  When k &lt; log<sub>b</sub>(a) then T(n) = O(n^logb(a))</p> </li>
+                   <li> <p class="lead"> <strong>Case 2:</strong>  When k = log<sub>b</sub>(a) then T(n) = O(n^k * logn)</p> </li>
+                   <li> <p class="lead"> <strong>Case 3:</strong>  When k &gt; log<sub>b</sub>(a) then T(n) = O(n^k)</p> </li>
+               </ol>
+
+               <p class="lead">
+                   In our previous case, <strong>k=0</strong> and <strong>b=2, a=2</strong>.
+                   Therefore, <strong>Case 1</strong> since k <
+               </p>
         </section>
 
     </main>
