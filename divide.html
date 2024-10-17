@@ -277,21 +277,673 @@
                </p>
 
                <ol>
-                   <li> <p class="lead"> <strong>Case 1:</strong>  When k &lt; log<sub>b</sub>(a) then T(n) = O(n^logb(a))</p> </li>
-                   <li> <p class="lead"> <strong>Case 2:</strong>  When k = log<sub>b</sub>(a) then T(n) = O(n^k * logn)</p> </li>
-                   <li> <p class="lead"> <strong>Case 3:</strong>  When k &gt; log<sub>b</sub>(a) then T(n) = O(n^k)</p> </li>
+                   <li> <p class="lead"> <strong>Case 1:</strong>   If f(n)=O(n<sup>log<sub>b</sub> a−ϵ</sup>) for some ϵ>0, then T(n)=Θ(n<sup>log<sub>b</sub> a</sup>).</p> </li>
+                   <li> <p class="lead"> <strong>Case 2:</strong>  If f(n)=Θ(n <sup>log <sub>b</sub>a</sup>), then T(n)=Θ(n <sup>log <sub>b</sub>a</sup> logn)</li>
+                   <li> <p class="lead"> <strong>Case 3:</strong>  if f(n)=Ω(n <sup>log <sub>b</sub>a+ϵ</sup>) for some ϵ>0 (and af(n/b)≤cf(n) for some c<1 for all n sufficiently large), then T(n)=Θ(f(n))</p> </li>
                </ol>
 
                <p class="lead">
                    In our previous case, <strong>k=0</strong> and <strong>b=2, a=2</strong>.
-                   Therefore, <strong>Case 1</strong> since k <
+                   Therefore, <strong>Case 1</strong> since with ϵ=1 f(n) = n<sup>log<sub>2</sub> 2 −1</sup>
                </p>
+
+               <p class="lead">
+                   Master Theorem returns exactly the same result of recurrence tree, namely <strong>O(n)</strong>.
+               </p>
+
+               <h3 class="h3 mb-3">Substitution Method</h3>
+
+               <p class="lead">
+                   The substitution method is a condensed way of proving an asymptotic bound on a recurrence by induction.
+                   In the substitution method, instead of trying to find an exact closed-form solution, we only try to find a closed-form bound on the recurrence.
+                   This is often much easier than finding a full closed-form solution, as there is much greater leeway in dealing with constants.
+               </p>
+
+               <p class="lead">
+                   The substitution method is a powerful approach that is able to prove upper bounds for almost all recurrences.
+                   However, its power is not always needed; for certain types of recurrences, the master method (see above) can be used to derive a tight bound with less work.
+                   In those cases, it is better to simply use the master method, and to save the substitution method for recurrences that actually need its full power.
+               </p>
+
+               <p class="lead">
+                   Note that the substitution method still requires the use of induction.
+                   The induction will always be of the same basic form, but it is still important to state the property you are trying to prove, split into one or more base cases and the inductive case, and note when the inductive hypothesis is being used.
+               </p>
+
+               <p class="lead">
+                   Since we have to do a guess, in this case we can go through the result of recurrence tree which is a pretty common practice.
+                   So, our guess is that T(n)=2T(n/2) + O(1) belongs to O(n).
+               </p>
+
+               <p class="lead">
+                   <b>Base case:</b> T(1) = O(n=1) which clearly belongs to O(1).
+               </p>
+
+               <p class="lead">
+                   <b>Substitution step: </b> T(n)=2T(n/2)+Θ(1)
+               </p>
+
+               <p class="lead">
+                   =2T(n/2)+k
+               </p>
+
+                <p class="lead">
+                    =2(2T(n/4)+k)+k
+                </p>
+
+                <p class="lead">
+                     =2(2(2T(n/8)+k)+k)+k
+                 </p>
+
+                <p class="lead">
+                          =...
+                </p>
+
+                <p class="lead">
+                    We observe that the substitution can be generalized as <strong>2<sup>i</sup>T(n/2<sup>i</sup>)+ 2<sup>i-1</sup>k + 2<sup>i-2</sup>k + ... + 2</strong>
+                </p>
+
+                <p class="lead">
+                    Since the base case is reached after log n steps, we can rewrite everything as
+                </p>
+
+                <p class="lead">
+                    = 2<sup>logn</sup>T(1)+ ∑ <sub>i=0</sub> <sup>log n-1</sup> 2 <sup>i</sup>k
+                </p>
+                <p class="lead">
+                    =n + O(1) + 2<sup>logn -1 +1</sup> -1 which belongs to <strong>O(1)</strong>.
+                </p>
+
+                <h2 class="h3 mb-3">Let's Study Max Sum Subarray recurrence!</h2>
+
+                <p class="lead">
+                    We saw in our previous lesson a divide and conquer solution for <strong>max sum subarray</strong>.
+                    However, we did not analyze with in a formal way the time complexity.
+                    Let's try to derive a recurrence relation and then estimate its complexity.
+                    Below the code:
+                </p>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>int</b> maxSubArrayDivideAndConquer(<b>int</b> arr[], <b>int</b> low, <b>int</b> high) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (low == high) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> arr[low];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> mid = (low + high) / 2;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> leftMax = maxSubArrayDivideAndConquer(arr, low, mid);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> rightMax = maxSubArrayDivideAndConquer(arr, mid + 1, high);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> crossMax = maxCrossingSubArray(arr, low, mid, high);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> max(leftMax, rightMax, crossMax);</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>int</b> maxCrossingSubArray(<b>int</b> arr[], <b>int</b> low, <b>int</b> mid, <b>int</b> high) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> leftSum = -∞;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> sum = 0;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> i = mid; i >= low; i--) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum += arr[i];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (sum &gt; leftSum)</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leftSum = sum;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> rightSum = -∞;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;sum = 0;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> i = mid + 1; i &lt;= high; i++) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum += arr[i];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (sum &gt; rightSum)</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rightSum = sum;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> leftSum + rightSum;</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+
+                <h2 class="h2 mb-3">Sorting: the Relevance to Having Thing Tidy</h2>
+
+                <figure class="text-center">
+                   <img src="images/sorting_funny.jpg" class="img-fluid w-25 rounded shadow-sm">
+                   <figcaption class="text-muted mt-3">Funny Picture on Sorting.</figcaption>
+               </figure>
+
+               <p class="lead">
+                   Sorting, the process of arranging items in a particular order, is a fundamental operation in computer programming.
+                   The necessity for sorting arises in various contexts, from organizing library catalogs to optimizing search engine results.
+                   The inception of sorting algorithms dates back to the era of punch cards, where manual sorting was laborious and prone to errors.
+                   Let's start by introducing one of the easiest one: <strong>Bubble Sort</strong>.
+               </p>
+
+               <h3 class="h3 mb-3">Bubble Sort</h3>
+
+               <p class="lead">
+                   Bubble Sort is the simplest sorting algorithm that works by repeatedly swapping the adjacent elements if they are in the wrong order.
+                   This algorithm is not suitable for large data sets as its average and worst-case time complexity are quite high.
+               </p>
+
+               <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> bubble_sort(<b>int</b> A[], <b>int</b> n) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> temp;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> k = 0; k &lt; n - 1; k++) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// (n - k - 1) is for ignoring comparisons of already sorted elements</span></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> i = 0; i &lt; n - k - 1; i++) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b>(A[i] &gt; A[i + 1]) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// swap elements A[i] and A[i + 1]</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temp = A[i];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i] = A[i + 1];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[i + 1] = temp;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+
+               <figure class="text-center">
+                  <img src="images/bubble.png" class="img-fluid w-50 rounded shadow-sm">
+                  <figcaption class="text-muted mt-3">Bubble Sort Illustration.</figcaption>
+              </figure>
+
+              <p class="lead">
+                  In <strong>step 1</strong>, 7 is compared with 4.
+                  Since 7 > 4, 7 is moved ahead of 4.
+                  Since all the other elements are of a lesser value than 7, 7 is moved to the end of the array.
+                  Now, the array is A[]={4, 5, 2, 7}.
+              </p>
+
+              <p class="lead">
+                  In <strong>step 2</strong>, 4 is compared with 5. Since 5 > 4 and both 4 and 5 are in ascending order, these elements are not swapped. However, when 5 is compared with 2, 5 > 2 and these elements are in descending order.
+                  Therefore, 5 and 2 are swapped.
+                  Now the array is A[]={4, 2, 5, 7}.
+              </p>
+
+              <p class="lead">
+                  In <strong>step 3</strong>, the element 4 is compared with 2.
+                  Since 4 > 2 and the elements are in descending order, 4 is swapped with 2.
+                  The sorted array is <strong>A[]={2, 4, 5, 7}</strong>.
+              </p>
+
+              <p class="lead">
+                  The complexity of bubble sort is <strong>O(n<sup>2</sup>)</strong>  in both worst and average cases, because the entire array needs to be iterated for every element.
+              </p>
+
+              <h3 class="h3 mb-3">Selection Sort</h3>
+
+              <p class="lead">
+                  The Selection sort algorithm is based on the idea of finding the minimum or maximum element in an unsorted array and then putting it in its correct position in a sorted array.
+              </p>
+
+              <p class="lead">
+                  Assume that the array A = [7, 5, 4, 2] once again needs to be sorted in ascending order.
+              </p>
+
+              <p class="lead">
+                  The minimum element in the array i.e., 2 is searched for and then swapped with the element that is currently located at the first position, i.e., 7.
+                  Now the minimum element in the remaining unsorted array is searched for and put in the second position, and so on.
+                  Let’s take a look at the implementation.
+              </p>
+
+              <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>void</b> selection_sort(<b>int</b> A[], <b>int</b> n) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// temporary variable to store the position of minimum element</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> minimum;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// reduces the effective size of the array by one in each iteration</span></p>
+
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> i = 0; i &lt; n - 1; i++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// assuming the first element to be the minimum of the unsorted array</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum = i;</p>
+
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// gives the effective size of the unsorted array</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> j = i + 1; j &lt; n; j++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b>(A[j] &lt; A[minimum]) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minimum = j;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// putting the minimum element in its proper position</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap(A[minimum], A[i]);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                At i-th iteration, elements from position 0 to i-1 will be sorted.
+            </p>
+
+              <figure class="text-center">
+                 <img src="images/selection.png" class="img-fluid w-50 rounded shadow-sm">
+                 <figcaption class="text-muted mt-3">Selection Sort Illustration.</figcaption>
+             </figure>
+
+             <p class="lead">
+                 <strong>Time Complexity:</strong> To find the minimum element from the array of N  elements, N-1 comparisons are required.
+                  After putting the minimum element in its proper position, the size of an unsorted array reduces to N-1  and then N-2 comparisons are required to find the minimum in the unsorted array.
+
+                  Therefore (N-1)+(N-2)+ ... + 1 = (N*(N-1))/2 comparisons and N swaps result in the overall complexity of <strong>O(n <sup>2</sup>)</strong>
+             </p>
+
+              <h3 class="h3 mb-3">Insertion Sort</h3>
+
+              <p class="lead">
+                  Insertion sort is based on the idea that one element from the input elements is consumed in each iteration to find its correct position i.e., the position to which it belongs in a sorted array.
+
+                  It iterates the input elements by growing the sorted array at each iteration.
+                  It compares the current element with the largest value in the sorted array.
+                  If the current element is greater, then it leaves the element in its place and moves on to the next element else it finds its correct position in the sorted array and moves it to that position.
+                  This is done by shifting all the elements, which are larger than the current element, in the sorted array to one position ahead.
+              </p>
+
+
+              <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> insertion_sort(<b>int</b> A[], <b>int</b> n) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> i = 0; i &lt; n; i++) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Store the current element whose left side is checked for its correct position */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> temp = A[i];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> j = i;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Check whether the adjacent element on the left is greater than the current element */</span></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>while</b>(j &gt; 0 &amp;&amp; temp &lt; A[j - 1]) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Move the left element one position forward */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[j] = A[j - 1];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j = j - 1;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Place the current element in its correct position */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[j] = temp;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+              <p class="lead">
+                  Let's take once again the array A[]= {7,4,5,2}.
+              </p>
+
+              <figure class="text-center">
+                 <img src="images/insertion_sort.png" class="img-fluid w-50 rounded shadow-sm">
+                 <figcaption class="text-muted mt-3">Insertion Sort Illustration.</figcaption>
+             </figure>
+
+              <p class="lead">
+                  Since 7 is the first element has no other element to be compared with, it remains at its position.
+                  Now when on moving towards 4, 7 is the largest element in the sorted list and greater than 4.
+                  So, move 4 to its correct position i.e., before 7.
+                  Similarly with 5, as 7 (largest element in the sorted list) is greater than 5, we will move 5 to its correct position.
+                  Finally for 2, all the elements on the left side of 2 (sorted list) are moved one position forward as all are greater than 2 and then 2 is placed in the first position. Finally, the given array will result in a sorted array.
+              </p>
+
+              <p class="lead">
+                  <strong>Time Complexity:</strong> In worst case, each element is compared with all the other elements in the sorted array.
+                   For N elements, there will be N<sup>2</sup> comparisons.
+                   Therefore, the time complexity is O(N<sup>2</sup>).
+              </p>
+
+              <h3 class="h3 mb-3">Merge Sort</h3>
+
+              <p class="lead">
+                  Merge sort is a divide-and-conquer algorithm based on the idea of breaking down a list into several sub-lists until each sublist consists of a single element and merging those sublists in a manner that results into a sorted list.
+              </p>
+
+              <ul>
+                  <li>
+                      <p class="lead">
+                          Divide the unsorted list into N sublists, each containing 1  element.
+                      </p>
+                  </li>
+                  <li>
+                      <p class="lead">
+                          Take adjacent pairs of two singleton lists and merge them to form a list of 2 elements.
+                          N will now convert into N/2 lists of size 2.
+                       </p>
+                  </li>
+                  <li>
+                      <p class="lead">
+                          Repeat the process till a single sorted list of obtained.
+                      </p>
+                  </li>
+              </ul>
+
+              <p class="lead">
+                  While comparing two sublists for merging, the first element of both lists is taken into consideration.
+                  While sorting in ascending order, the element that is of a lesser value becomes a new element of the sorted list.
+                  This procedure is repeated until both the smaller sublists are empty and the new combined sublist comprises all the elements of both the sublists.
+              </p>
+
+              <figure class="text-center">
+                 <img src="images/merge.jpg" class="img-fluid w-50 rounded shadow-sm">
+                 <figcaption class="text-muted mt-3">Merge Sort Illustration.</figcaption>
+             </figure>
+
+             <p class="lead">
+                 As one may understand from the image above, at each step a list of size M is being divided into 2 sublists of size M/2, until no further division can be done.
+                 To understand better, consider a smaller array A containing the elements [9,7,8].
+             </p>
+
+             <p class="lead">
+                 At the first step this list of size 3 is divided into 2 sublists the first consisting of elements [9,7]  and the second one being [8].
+                 Now, the first list consisting of elements [9,7]  is further divided into 2 sublists consisting of elements [9] and [7] respectively.
+             </p>
+
+             <p class="lead">
+                 As no further breakdown of this list can be done, as each sublist consists of a maximum of 1 element, we now start to merge these lists.
+                 The 2 sub-lists formed in the last step are then merged together in sorted order using the procedure mentioned above leading to a new list [7,9].
+                 Backtracking further, we then need to merge the list consisting of element [8] too with this list, leading to the new sorted list [7,8,9].
+             </p>
+
+             <p class="lead">
+                 An implementation has been provided below :
+              </p>
+              <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> merge(<b>int</b> A[], <b>int</b> start, <b>int</b> mid, <b>int</b> end) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Store the starting positions of both parts */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> p = start, q = mid + 1;</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> Arr[end - start + 1], k = 0;</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> i = start; i &lt;= end; i++) {</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b>(p &gt; mid) <span class="text-muted">/* First part comes to an end */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arr[k++] = A[q++];</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>else if</b>(q &gt; end) <span class="text-muted">/* Second part comes to an end */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arr[k++] = A[p++];</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>else if</b>(A[p] &lt; A[q]) <span class="text-muted">/* Smaller element in first part */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arr[k++] = A[p++];</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>else</b> <span class="text-muted">/* Smaller element in second part */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arr[k++] = A[q++];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> p = 0; p &lt; k; p++) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A[start++] = Arr[p];</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Copy elements back to original array */</span></p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <p class="lead">
+                    Here, in merge function, we will merge two parts of the arrays where one part has starting and ending positions from start to mid respectively and another part has positions from mid+1 to the end.
+                </p>
+
+                <p class="lead">
+                    A beginning is made from the starting parts of both arrays. i.e. p and q. Then the respective elements of both the parts are compared and the one with the smaller value will be stored in the auxiliary array (Arr[ ]). If at some condition ,one part comes to end ,then all the elements of another part of array are added in the auxiliary array in the same order they exist.
+                </p>
+
+                <p class="lead">
+                    Now consider the following 2 branched recursive function :
+                </p>
+
+                <div class="example-container mb-4">
+                    <div class="example">
+                        <p class="text-left"><b>void</b> merge_sort(<b>int</b> A[], <b>int</b> start, <b>int</b> end) {</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b>(start &lt; end) {</p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> mid = (start + end) / 2;</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Divide the array into two parts */</span></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;merge_sort(A, start, mid);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Sort the first half */</span></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;merge_sort(A, mid+1, end);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Sort the second half */</span></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;merge(A, start, mid, end);</p>
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">/* Merge the two sorted halves */</span></p>
+
+                        <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                        <p class="text-left">}</p>
+                    </div>
+                </div>
+
+                <div class="container text-center">
+                    <p class="lead-1">
+                        <b>What is Merge Sort Time complexity?</b>
+                    </p>
+                </div>
+
+                <p class="lead">
+                    <strong>Time Complexity:</strong> the list of size N is divided into a max of logN parts, and the merging of all sublists into a single list takes O(N) time, the worst case run time of this algorithm is O(NlogN).
+                </p>
+
+                <div class="container text-center">
+                    <p class="lead-1">
+                        <b>Let's discuss it more formally...</b>
+                    </p>
+                </div>
+
+              <h3 class="h3 mb-3">Quicksort</h3>
+              <p class="lead">
+                  Quick sort is based on the divide-and-conquer approach based on the idea of choosing one element as a pivot element and partitioning the array around it such that: Left side of pivot contains all the elements that are less than the pivot element Right side contains all elements greater than the pivot.
+              </p>
+
+              <p class="lead">
+                  It reduces the space complexity and removes the use of the auxiliary array that is used in merge sort. Selecting a random pivot in an array results in an improved time complexity in most of the cases.
+              </p>
+
+              <p class="lead">
+                  <strong>Implementation:</strong>
+              </p>
+
+              <p class="lead">
+                  Select the first element of array as the pivot element.
+                  First, we will see how the partition of the array takes place around the pivot.
+              </p>
+
+              <figure class="text-center">
+                 <img src="images/quick1.png" class="img-fluid w-50 rounded shadow-sm">
+                 <figcaption class="text-muted mt-3">Quicksort Partitioning Illustration.</figcaption>
+             </figure>
+
+             <p class="lead">
+                 In the implementation below, the following components have been used:
+                 Here, A[] = array whose elements are to be sorted.
+             </p>
+             <ul>
+                 <li>
+                     <p class="lead">
+                         <strong>start</strong>: leftmost position of the array
+                     </p>
+                 </li>
+                 <li>
+                     <p class="lead">
+                         <strong>end</strong>: rightmost position of the array
+                     </p>
+                 </li>
+                 <li>
+                     <p class="lead">
+                         <strong>i</strong>: Boundary between the elements that are less than pivot and those greater than pivot
+                     </p>
+                 </li>
+                 <li>
+                     <p class="lead">
+                         <strong>j</strong>: Boundary between the partitioned and unpartitioned part of array
+                     </p>
+                 </li>
+                 <li>
+                     <p class="lead">
+                         <strong>piv</strong>: Pivot element
+                     </p>
+                 </li>
+             </ul>
+
+             <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>int</b> partition(<b>int</b> A[], <b>int</b> start, <b>int</b> end) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> i = start + 1;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> piv = A[start]; <span class="text-muted">/* First element as pivot */</span></p>
+
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b>(<b>int</b> j = start + 1; j &lt;= end; j++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b>(A[j] &lt; piv) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap(A[i], A[j]);</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i += 1;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;swap(A[start], A[i-1]); <span class="text-muted">/* Put pivot in its correct position */</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> i - 1; <span class="text-muted">/* Return pivot position */</span></p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                Now, let us see the recursive function Quick_sort:
+            </p>
+
+            <figure class="text-center">
+               <img src="images/quick2.jpg" class="img-fluid w-50 rounded shadow-sm">
+               <figcaption class="text-muted mt-3">Quicksort Illustration.</figcaption>
+           </figure>
+
+           <p class="lead">
+               Here we find the proper position of the pivot element by rearranging the array using partition function. Then we divide the array into two halves left side of the pivot (elements less than pivot element) and right side of the pivot (elements greater than pivot element) and apply the same step recursively.
+           </p>
+
+           <p class="lead">
+               <strong>Example:</strong> You have an array A=[9, 7, 8, 3, 2, 1]. Observe in the diagram below, that the <strong>randpartition()</strong> function chooses pivot randomly as 7 and then swaps it with the first element of the array and then the <strong>partition()</strong> function call takes place, which divides the array into two halves.
+               The first half has elements less than 7 and the other half has elements greater than 7.
+               For elements less than 7, in 5th call, <strong>randpartition()</strong> function chooses 2 as pivot element randomly and then swap it with first element and call to the <strong>partition()</strong> function takes place.
+               After the 7th and 8th call, no further calls can take place as only one element left in both the calls.
+               Similarly, you can observe the order of calls for the elements greater than 7.
+           </p>
+
+           <p class="lead">
+               Let’s see the randomized version of the partition function:
+           </p>
+
+           <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>int</b> rand_partition(<b>int</b> A[], <b>int</b> start, <b>int</b> end) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-muted">// Chooses pivot randomly using rand() function</span></p>                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> random = start + rand() % (end - start + 1);</p>
+
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;swap(A[random], A[start]); <span class="text-muted">/* Swap pivot with 1st element */</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> partition(A, start, end); <span class="text-muted">/* Call the partition function */</span></p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+            <p class="lead">
+                Relying on <strong>randpartition()</strong> rather than <strong>partition()</strong> function in quicksort() helps us to reduce the average time complexity of this algorithm.
+            </p>
+
+            <p class="lead">
+                <strong>Time Complexity:</strong> the worst case of this algorithm is O(N<sup>2</sup>), but as this is randomized algorith, its time complexity fluctuates between O(N<sup>2</sup>) and O(NlogN) and mostly it comes out to be O(NlogN).
+            </p>
         </section>
 
+        <section id="exercises" class="mb-5">
+            <h2 class="h2 mb-3">It's Evaluation Time!</h2>
+            <p class="lead">
+                In this lesson, we explored the divide and conquer strategy, which breaks complex problems into smaller, more manageable subproblems.
+                We saw examples of this approach in action, including how recursion plays a central role in solving these subproblems.
+                We also delved into the time complexity of recursive algorithms, learning how to compute it using methods like the Master Theorem.
+                Additionally, we studied key sorting algorithms, such as Merge Sort and Quick Sort, which are classic examples of divide and conquer, and analyzed their efficiency through time complexity.
+                Overall, we gained a deeper understanding of how these concepts are used to design efficient algorithms.
+                valuating the knowledge developed on those topics requires to understand in depth the main pitfalls.
+            </p>
+
+            <ul>
+                <li>
+                    <p class="lead">
+                        Students sometimes struggle with the concept of breaking a problem into smaller subproblems, especially when the merging or recombination step is not intuitive.
+                        They may also miss how the problem size reduces at each recursive step.
+                    </p>
+                </li>
+                <li>
+                    <p class="lead">
+                        Many students find it challenging to compute the time complexity of recursive algorithms, especially when applying the Master Theorem or solving recurrence relations.
+                        They might misinterpret the different cases or overlook how the recursive calls build up.
+                    </p>
+                </li>
+                <li>
+                    <p class="lead">
+                        While implementing sorting algorithms like Merge Sort or Quick Sort, students can often get tripped up by the base cases, recursive steps, or partitioning logic in Quick Sort.
+                        They may also confuse their time complexities or struggle to understand why some are more efficient in certain scenarios.
+                    </p>
+                </li>
+            </ul>
+
+            <h3 class="h3 mb-3">Example 1</h3>
+
+            <p class="lead">
+                One of the most common exercise to evaluate the understanding over the Divide and Conquer is to solve a problem relying on such strategy.
+                For example, Given a sorted array 𝐴 of 𝑛 integers and an integer 𝑘, determine if there are two distinct integers in 𝐴 such that their product equals 𝑘.
+            </p>
+
+            <p class="lead">
+                <strong>Tasks:</strong>
+            </p>
+
+            <ol>
+                <li>
+                    <p class="lead">
+                        Provide the pseudocode for an algorithm that solves this problem.
+                    </p>
+                </li>
+                <li>
+                    <p class="lead">
+                        Analyze the time complexity of the proposed solution.
+                    </p>
+                </li>
+                <li>
+                    <p class="lead">
+                        Discuss whether the proposed solution is optimal.
+                    </p>
+                </li>
+            </ol>
+
+            <h3 class="h3 mb-3">Example 2</h3>
+            <p class="lead">
+                Another traditional example to test students ability, it is evaluate recursive snippets of code solving their time complexity.
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>Procedure</b> Pippo(<b>int</b> n)</p>
+                    <p class="text-left"><b>begin</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;k = n, i = 1</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>while</b> <span class="text-warning">$k <= 5$</span> <b>do</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = 0</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> j = 1; j $\leq$ 7; j++ <b>do</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a = a + 1</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;k = k - 12 + a</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> <span class="text-warning">$n <= 10$</span> <b>then</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pippo = 2 * Pippo(<span class="text-warning">$n/2$</span>) + <span class="text-warning">$ \sqrt{n} $</span></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>else</b></p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pippo = 100</p>
+                    <p class="text-left"><b>end</b></p>
+                </div>
+            </div>
+
+            <h3 class="h3 mb-3">Example 3</h3>
+
+            <p class="lead">
+                Finally, in order to understand the comprehension over sorting algorithm, the best way is to ask for small changes in traditional procedure.
+                Given 3 arrays A[], B[], and C[] that are sorted in ascending order, the task is to merge them together in ascending order and output the array D[].
+            </p>
+
+        </section>
+
+
+        <div class="container text-center">
+            <button class="btn btn-primary lesson-btn" onclick="window.location.href='index.html'">Return to Home</button>
+        </div>
     </main>
 
     <footer class="text-center mt-5 py-4 bg-light">
-        <p class="text-muted">&copy; 2024 Didattica degli Algoritmi.   </p>
+        <p class="text-muted">&copy; 2024 Didattica degli Algoritmi.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>

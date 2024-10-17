@@ -34,21 +34,32 @@
                 Donald Knuth defines an algorithm as a set of steps, or rules, with five basic properties:
                 <ul>
                     <li class="lead">
+                        <p class="lead">
                         <strong>Finiteness</strong> - An algorithm must start and stop. The rules an algorithm applies must also conclude in a reasonable amount of time. What “reasonable” is depends on the nature of the algorithm, but in no case can an algorithm take an infinite amount of time to complete its task.
                         Knuth calls this property the finiteness of an algorithm.
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         <strong>Definiteness</strong>  - The actions that an algorithm performs cannot be open to multiple interpretations; each step must be precise and unambiguous. Knuth terms this quality definiteness. An algorithm cannot iterate a “bunch” of times. The number of times must be precisely expressed, for example 2, 1000000, or a randomly chosen number.
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         <strong>Inputs</strong>- An algorithm starts its computation from an initial state. This state may be expressed as input values given to the algorithm before it starts.
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         <strong>Outputs</strong>- An algorithm must produces a result with a specific relation to the inputs.
+                        </p>
                     </li>
                     <li class="lead">
-                        <strong>Effectiveness</strong>  - The steps an algorithm takes must be sufficiently simple that they could be expressed “on paper”; these steps must make sense for the quantities used. Knuth terms this property effectiveness.
-                        So for the example above of getting to work in the morning, the algorithm is considered finite because it will eventually end when I reach work. It is definite because each step can be followed exactly. The inputs include: my kids, the bus, myself, etc… The output is that I arrive at work. And the algorithm is considered effective because the steps can be listed for you to read and understand.
+                        <p class="lead">
+                            <strong>Effectiveness</strong>  - The steps an algorithm takes must be sufficiently simple that they could be expressed “on paper”; these steps must make sense for the quantities used. Knuth terms this property effectiveness.
+                            So for the example above of getting to work in the morning, the algorithm is considered finite because it will eventually end when I reach work. It is definite because each step can be followed exactly. The inputs include: my kids, the bus, myself, etc… The output is that I arrive at work.
+                            And the algorithm is considered effective because the steps can be listed for you to read and understand.
+                        </p>
                     </li>
                 </ul>
             </p>
@@ -187,10 +198,38 @@
         </section>
 
         <section id="brute-force" class="mb-5">
-            <h3 class="h3 mb-3">Brute Force Solution</h3>
+            <h3 class="h3 mb-3">Brute Force Solution (a litte bit better)</h3>
             <p class="lead">
                 The brute force solution for the Maximum Subarray Sum problem involves systematically checking all possible subarrays
-                and calculating their sums to find the maximum sum. Though simple, it is inefficient with a time complexity of O(n²).
+                and calculating their sums to find the maximum sum.
+                Though simple, it is inefficient with a time complexity of O(n<sup>3</sup>).
+            </p>
+
+            <div class="example-container mb-4">
+                <div class="example">
+                    <p class="text-left"><b>int</b> maxSubArrayBruteForce(<b>int</b> arr[], <b>int</b> n) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> maxSum = -∞;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> i = 0; i &lt; n; i++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> j = i; j &lt; n; j++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>int</b> currentSum = 0;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> (<b>int</b> k = i; k &lt;= j; k++) {</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;currentSum += arr[k];</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>if</b> (currentSum &gt; maxSum)</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxSum = currentSum;</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;}</p>
+                    <p class="text-left">&nbsp;&nbsp;&nbsp;&nbsp;<b>return</b> maxSum;</p>
+                    <p class="text-left">}</p>
+                </div>
+            </div>
+
+
+            <h3 class="h3 mb-3">Brute Force Solution (a litte bit better)</h3>
+            <p class="lead">
+                The brute force solution for the Maximum Subarray Sum problem involves systematically checking all possible subarrays.
+                However, we can improve a little bit its performance by storing partial sums.
+                The function becomes O(n²).
             </p>
 
             <!-- Input vector visualization -->
@@ -303,13 +342,19 @@
                 However, there are challenges that cannot be neglected:
                 <ul>
                     <li class="lead">
+                        <p class="lead">
                         Experimental running times of two algorithms are difficult to directly compare unless the experiments are performed in the same hardware and software environments.
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         Experiments can be done only on a limited set of test inputs; hence, they leave out the running times of inputs not included in the experiment (and these inputs may be important).
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         An algorithm must be fully implemented in order to execute it to study its running time experimentally.
+                        </p>
                     </li>
                 </ul>
             </p>
@@ -339,13 +384,19 @@
                 The RAM model has the following properties:
                 <ul>
                     <li class="lead">
+                        <p class="lead">
                         A simple operation (+, \, *, -, =, if) takes one time step.
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         Loops and subroutines are comprised of simple operations.
+                        </p>
                     </li>
                     <li class="lead">
+                        <p class="lead">
                         Memory is unlimited and access takes one time step (the RAM model does not consider whether data is on cache or disk).
+                        </p>
                     </li>
                 </ul>
                 Using the RAM model, you measure the running time of an algorithm by counting the number of steps an algorithm takes on a given input.
@@ -359,9 +410,9 @@
             </p>
 
             <ul>
-                <li class="lead">The <strong>best-case complexity</strong> is the minimum number of steps taken to complete.</li>
-                <li class="lead">The <strong>worst-case complexity</strong> is the maximum number of steps taken to complete.</li>
-                <li class="lead">The <strong>average-case complexity</strong> is the average number of steps taken to complete.</li>
+                <li class="lead"><p class="lead">The <strong>best-case complexity</strong> is the minimum number of steps taken to complete.</p></li>
+                <li class="lead"><p class="lead">The <strong>worst-case complexity</strong> is the maximum number of steps taken to complete.</p></li>
+                <li class="lead"><p class="lead">The <strong>average-case complexity</strong> is the average number of steps taken to complete.</p></li>
             </ul>
 
             <p class="lead">
@@ -514,10 +565,14 @@
 
             <ul class="lead">
                 <li>
+                    <p class="lead">
                     It is pretty common that students struggle in front of functions and mathematical concepts.
+                    </p>
                 </li>
                 <li>
+                    <p class="lead">
                     Another pretty common challenge is to understand loops and incrementally more complex code time Complexities.
+                    </p>
                 </li>
             </ul>
 

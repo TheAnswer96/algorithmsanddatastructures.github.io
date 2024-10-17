@@ -190,7 +190,7 @@ async function divideAndConquerMaxSubarray(arr, low, high) {
     const mid = Math.floor((low + high) / 2);
     visualizeVector(inputVectorElements.dnc, inputVectors.dnc, low, high, 'highlight-split');
     await delayFunc(delay);
-    
+
     const [leftLow, leftHigh, leftSum] = await divideAndConquerMaxSubarray(arr, low, mid);
     const [rightLow, rightHigh, rightSum] = await divideAndConquerMaxSubarray(arr, mid + 1, high);
     const [crossLow, crossHigh, crossSum] = findMaxCrossingSubarray(arr, low, mid, high);
